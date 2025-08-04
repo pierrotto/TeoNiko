@@ -1,0 +1,48 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main>
+
+        <section class="carousel-section">
+            <h2>РАЗГЛЕДАЙ БИЖУТАТА <strong>Teoniko</strong></h2>
+            <p class="carousel-subtitle">Подредени по категории, за да откриеш по-лесно и бързо това което търсиш.</p>
+            {% include 'common/carousel.html' %}
+        </section>
+
+        <section class="about-section">
+            <div class="about-container">
+                <div class="about-image">
+                    <img src="{% static 'images/svetla_1.jpg' %}" alt="Светлана Тодорова">
+                </div>
+                <div class="about-text">
+                    <h2>ХАЙДЕ ДА СЕ ЗАПОЗНАЕМ</h2>
+                    <p>
+                        Зад <strong>Teoniko – Бижута с харизма</strong> стоя аз – Светлана Тодорова – една майка, готова
+                        на
+                        всичко за децата си.
+                        Още от дете обичам да изработвам неща с ръцете си. Естествените камъни са ми страст от както се
+                        помня.
+                        От всяко място, на което съм била си събирам красиви камъчета.
+                        Започнах да се интересувам какви точно са тези камъчета, как въздействат на организма, а това
+                        постепенно ме отведе и до изработването на бижута.
+                    </p>
+                    <p>
+                        Въпреки всичко, започнах да изработвам бижута професионално доста късно – на 39.
+                        Истинският тласък да създам <strong>Teoniko – Бижута с харизма</strong> бяха моите две деца –
+                        Малкият ми син тогава…
+                    </p>
+                    <button class="read-more">ПРОЧЕТИ ПОВЕЧЕ</button>
+                </div>
+            </div>
+        </section>
+
+        {% block extra_js %}
+            <script src="{% static 'js/carousel.js' %}"></script>
+        {% endblock %}
+    </main>
+{% endblock %}

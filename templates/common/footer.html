@@ -1,0 +1,69 @@
+{% load static %}
+
+<head>
+    <meta charset="UTF-8"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <title>Teoniko Footer</title>
+    <link rel="stylesheet" href="{% static 'css/footer.css' %}"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
+</head>
+<footer class="footer">
+  <div class="footer-container">
+
+    <!-- Column: About Us -->
+    <div class="footer-column">
+      <h3>ЗА НАС</h3>
+      <ul>
+        <li><i class="fas fa-map-marker-alt"></i> <strong>Теонис Лумине ЕООД</strong><br>гр. Бургас, к-с Меден рудник</li>
+        <li><i class="fas fa-phone"></i> <strong>Тел:</strong> +359 897 967107</li>
+        <li><i class="fas fa-envelope"></i> <strong>EMAIL</strong><br>teoniko.com@gmail.com</li>
+        <li><i class="fab fa-facebook"></i> <strong>FB</strong><br>Teoniko – Бижута с харизма</li>
+        <li><i class="fas fa-link"></i> <strong>Website</strong><br>Teoniko – Бижута с харизма</li>
+      </ul>
+    </div>
+
+    <!-- Column: Contact Links -->
+    <div class="footer-column">
+      <h3>За контакт</h3>
+      <ul>
+        <li><a href="#">Контакти</a></li>
+        <li><a href="#">Работете с нас</a></li>
+        <li><a href="#">Условия за реклама</a></li>
+        <li><a href="#">Видео</a></li>
+        <li><a href="#">Знаете ли, че…</a></li>
+      </ul>
+    </div>
+
+    <!-- Column: Info & Terms -->
+    <div class="footer-column">
+      <h3>Информация и условия</h3>
+      <ul>
+        <li><a href="#">За нас</a></li>
+        <li><a href="#">Новини</a></li>
+        <li><a href="#">Гаранция</a></li>
+        <li><a href="#">Информация за бисквитките</a></li>
+        <li><a href="#">Общи условия</a></li>
+        <li><a href="#">Плащане, доставка и рекламации</a></li>
+        <li><a href="#">Политика на поверителност</a></li>
+      </ul>
+    </div>
+
+    <!-- Column: Newsletter -->
+    <div class="footer-column newsletter">
+      <h3>Регистрация за бюлетин</h3>
+      <p>Новини, специални оферти, промоции!</p>
+      <form>
+        <input type="email" placeholder="Вашият имейл адрес…" />
+        <button type="submit">Запиши ме!</button>
+        <input type="text" class="captcha" placeholder="Код за сигурност" />
+      </form>
+    </div>
+
+  </div>
+
+  <!-- Bottom Bar -->
+  <div class="footer-bottom">
+    <img src="{% static 'images/logo_only.svg' %}" alt="Teoniko Logo" class="footer-logo">
+    <p>© Teoniko – Бижута с харизма 2022</p>
+  </div>
+</footer>

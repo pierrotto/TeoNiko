@@ -1,0 +1,54 @@
+{% load static %}
+
+<div class="carousel-wrapper">
+    <button class="carousel-btn left" onclick="scrollCarousel(-1)">&#8249;</button>
+
+    <div class="carousel-viewport">
+        <div class="carousel-track" id="carouselTrack">
+
+
+            {% for category in categories|slice:"-4:" %}
+                <div class="carousel-item clone">
+                    {% with category.photos.first as photo %}
+                        {% if photo %}
+                            <img src="{{ photo.image.url }}" alt="{{ category.name }}">
+                        {% else %}
+                            <img src="{% static 'category_images/placeholder.jpeg' %}" alt="No image">
+                        {% endif %}
+                    {% endwith %}
+                    <p>{{ category.get_name_display }} ➞</p>
+                </div>
+            {% endfor %}
+
+
+            {% for category in categories %}
+                <div class="carousel-item">
+                    {% with category.photos.first as photo %}
+                        {% if photo %}
+                            <img src="{{ photo.image.url }}" alt="{{ category.name }}">
+                        {% else %}
+                            <img src="{% static 'category_images/placeholder.jpeg' %}" alt="No image">
+                        {% endif %}
+                    {% endwith %}
+                    <p>{{ category.get_name_display }} ➞</p>
+                </div>
+            {% endfor %}
+
+
+            {% for category in categories|slice:":4" %}
+                <div class="carousel-item clone">
+                    {% with category.photos.first as photo %}
+                        {% if photo %}
+                            <img src="{{ photo.image.url }}" alt="{{ category.name }}">
+                        {% else %}
+                            <img src="{% static 'category_images/placeholder.jpeg' %}" alt="No image">
+                        {% endif %}
+                    {% endwith %}
+                    <p>{{ category.get_name_display }} ➞</p>
+                </div>
+            {% endfor %}
+        </div>
+    </div>
+
+    <button class="carousel-btn right" onclick="scrollCarousel(1)">&#8250;</button>
+</div>

@@ -1,0 +1,58 @@
+<svg viewBox="0 0 100 100" xmlns="http://www.w3.org/2000/svg">
+    <!-- Mandala Pattern -->
+    <g transform="translate(60, 60)">
+        <!-- Outer petals/points -->
+        <g fill="#B22222" stroke="#B22222" stroke-width="0.3">
+            <!-- 16 outer pointed petals -->
+            <g>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(0)"/>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(22.5)"/>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(45)"/>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(67.5)"/>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(90)"/>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(112.5)"/>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(135)"/>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(157.5)"/>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(180)"/>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(202.5)"/>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(225)"/>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(247.5)"/>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(270)"/>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(292.5)"/>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(315)"/>
+                <path d="M0,-40 L3,-25 L0,-20 L-3,-25 Z" transform="rotate(337.5)"/>
+            </g>
+
+            <!-- Middle layer - 8 larger petals -->
+            <g>
+                <path d="M0,-25 L5,-18 L8,-10 L5,-5 L0,-8 L-5,-5 L-8,-10 L-5,-18 Z" transform="rotate(0)"/>
+                <path d="M0,-25 L5,-18 L8,-10 L5,-5 L0,-8 L-5,-5 L-8,-10 L-5,-18 Z" transform="rotate(45)"/>
+                <path d="M0,-25 L5,-18 L8,-10 L5,-5 L0,-8 L-5,-5 L-8,-10 L-5,-18 Z" transform="rotate(90)"/>
+                <path d="M0,-25 L5,-18 L8,-10 L5,-5 L0,-8 L-5,-5 L-8,-10 L-5,-18 Z" transform="rotate(135)"/>
+                <path d="M0,-25 L5,-18 L8,-10 L5,-5 L0,-8 L-5,-5 L-8,-10 L-5,-18 Z" transform="rotate(180)"/>
+                <path d="M0,-25 L5,-18 L8,-10 L5,-5 L0,-8 L-5,-5 L-8,-10 L-5,-18 Z" transform="rotate(225)"/>
+                <path d="M0,-25 L5,-18 L8,-10 L5,-5 L0,-8 L-5,-5 L-8,-10 L-5,-18 Z" transform="rotate(270)"/>
+                <path d="M0,-25 L5,-18 L8,-10 L5,-5 L0,-8 L-5,-5 L-8,-10 L-5,-18 Z" transform="rotate(315)"/>
+            </g>
+
+            <!-- Inner star pattern -->
+            <g>
+                <path d="M0,-15 L2,-10 L6,-8 L2,-6 L0,-3 L-2,-6 L-6,-8 L-2,-10 Z" transform="rotate(0)"/>
+                <path d="M0,-15 L2,-10 L6,-8 L2,-6 L0,-3 L-2,-6 L-6,-8 L-2,-10 Z" transform="rotate(45)"/>
+                <path d="M0,-15 L2,-10 L6,-8 L2,-6 L0,-3 L-2,-6 L-6,-8 L-2,-10 Z" transform="rotate(90)"/>
+                <path d="M0,-15 L2,-10 L6,-8 L2,-6 L0,-3 L-2,-6 L-6,-8 L-2,-10 Z" transform="rotate(135)"/>
+                <path d="M0,-15 L2,-10 L6,-8 L2,-6 L0,-3 L-2,-6 L-6,-8 L-2,-10 Z" transform="rotate(180)"/>
+                <path d="M0,-15 L2,-10 L6,-8 L2,-6 L0,-3 L-2,-6 L-6,-8 L-2,-10 Z" transform="rotate(225)"/>
+                <path d="M0,-15 L2,-10 L6,-8 L2,-6 L0,-3 L-2,-6 L-6,-8 L-2,-10 Z" transform="rotate(270)"/>
+                <path d="M0,-15 L2,-10 L6,-8 L2,-6 L0,-3 L-2,-6 L-6,-8 L-2,-10 Z" transform="rotate(315)"/>
+            </g>
+
+            <!-- Center geometric pattern -->
+            <polygon points="0,-8 2.8,-2.8 8,0 2.8,2.8 0,8 -2.8,2.8 -8,0 -2.8,-2.8" fill="#B22222"/>
+
+            <!-- Very center -->
+            <circle cx="0" cy="0" r="3" fill="#8B0000"/>
+        </g>
+    </g>
+
+</svg>

@@ -1,0 +1,270 @@
+
+body {
+    margin: 0;
+    font-family: sans-serif;
+}
+
+.navbar {
+    background-image: url("/static/diamond_pile.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0 20px;
+    /*position: sticky;*/
+    top: 0;
+    /*z-index: 1000;*/
+    height: 120px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: visible;
+    z-index: 1;
+}
+
+@media (min-width: 768px) {
+    .navbar:hover {
+        transform: scale(1.05);
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.3);
+    }
+}
+
+.navbar::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("/static/diamond_pile.png");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
+    z-index: -1;
+    transition: transform 0.5s ease;
+}
+
+.navbar:hover::before {
+    transform: scale(1.1); /* smooth zoom-in */
+}
+
+.navbar-logo {
+    display: flex;
+    align-items: center;
+    gap: 6px;
+}
+
+.navbar-logo img {
+    height: 70px;
+    width: auto;
+    display: block;
+    margin-bottom: 7px;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.1;
+    margin-top: 2px;
+    margin-bottom: 0;
+}
+
+.my-soul-regular {
+    font-family: 'My Soul', cursive;
+    font-weight: 500;
+    font-size: 28px;
+    color: #830505;
+    margin: 0;
+    padding: 0;
+}
+
+.subtitle {
+    font-family: serif;
+    font-size: 14px;
+    font-style: italic;
+    color: #830505;
+    margin-top: -20px;
+}
+
+.navbar-menu {
+    list-style: none;
+    display: flex;
+    margin: 0;
+    padding: 0;
+    gap: 20px;
+}
+
+.navbar-menu li {
+    position: relative;
+}
+
+.navbar-menu a {
+    text-decoration-line: none;
+    color: black;
+    font-weight: bold;
+    padding: 10px;
+}
+
+.navbar-menu .dropdown:hover .dropdown-menu {
+    display: block;
+}
+
+.dropdown {
+    position: relative;
+}
+
+.dropdown-menu {
+    display: none;
+    position: absolute;
+    top: 150%;
+    left: 0;
+    background-color: #e3e3dc;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+    list-style: none;
+    padding: 10px 0;
+    min-width: 260px;
+    z-index: 100;
+}
+
+.dropdown:hover > .dropdown-menu,
+.dropdown-menu:hover {
+    display: block;
+}
+
+.dropdown-menu li {
+    padding: 0 5px;
+}
+
+.dropdown-menu li a {
+    color: white;
+    font-weight: normal;
+    text-align: left;           /* Align text to the left */
+    white-space: normal;        /* Allow line breaks */
+    display: block;             /* Make sure it takes full width */
+    padding: 8px 16px;          /* Optional: better spacing */
+    word-break: break-word;     /* Prevent overflow on long words */
+}
+
+.dropdown-menu li a:hover {
+    color: black;
+    transition: background-color 0.2s ease;
+}
+
+
+/*.navbar-icons a {*/
+/*    color: black;*/
+/*    margin-left: 15px;*/
+/*    position: relative;*/
+/*}*/
+
+.navbar-icons-circle {
+    position: relative;
+    width: 100px;
+    height: 100px;
+    border-radius: 50%;
+    background-color: rgba(255, 255, 255, 0.2); /* or another bg */
+    display: inline-block;
+    margin-right: 20px; /* position in navbar */
+}
+
+/* Base circle style for icons */
+.navbar-icons-circle .icon-circle {
+    position: absolute;
+    width: 36px;
+    height: 36px;
+    background-color: white;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: black;
+    text-decoration: none;
+    transition: transform 0.3s ease;
+}
+
+/* Positions */
+.icon-circle.top {
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.icon-circle.bottom {
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.icon-circle.left {
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+.icon-circle.right {
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%);
+}
+
+/* Hover effect for one */
+.icon-circle:hover {
+    transform: scale(1.4) translateX(-50%); /* scale + keep position centered */
+    z-index: 2;
+}
+
+.icon-circle.top:hover {
+    transform: translate(-50%, 10%) scale(1.4);
+    z-index: 2;
+}
+.icon-circle.bottom:hover {
+    transform: translate(-50%, -10%) scale(1.4);
+    z-index: 2;
+}
+.icon-circle.left:hover {
+    transform: translate(10%, -50%) scale(1.4);
+    z-index: 2;
+}
+.icon-circle.right:hover {
+    transform: translate(-10%, -50%) scale(1.4);
+    z-index: 2;
+}
+
+/*.navbar-icons-circle:hover .icon-circle.top {*/
+/*    transform: translate(-50%, 10%) scale(1.2);*/
+/*}*/
+/*.navbar-icons-circle:hover .icon-circle.bottom {*/
+/*    transform: translate(-50%, -10%) scale(1.2);*/
+/*}*/
+/*.navbar-icons-circle:hover .icon-circle.left {*/
+/*    transform: translate(10%, -50%) scale(1.2);*/
+/*}*/
+/*.navbar-icons-circle:hover .icon-circle.right {*/
+/*    transform: translate(-10%, -50%) scale(1.2);*/
+/*}*/
+
+/* Optional icon size */
+.icon-circle i {
+    font-size: 16px;
+}
+
+/* Cart count fix */
+.icon-circle .cart-count {
+    position: fixed;
+    top: 2px;
+    right: -6px;
+    background: black;
+    color: white;
+    font-size: 10px;
+    padding: 2px 4px;
+    border-radius: 50%;
+}
+
+/*.cart-count {*/
+/*    position: absolute;*/
+/*    top: -20px;*/
+/*    right: -20px;*/
+/*    background: #000;*/
+/*    color: #fff;*/
+/*    font-size: 10px;*/
+/*    padding: 2px 5px;*/
+/*    border-radius: 50%;*/
+/*}*/
