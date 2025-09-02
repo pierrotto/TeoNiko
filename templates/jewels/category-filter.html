@@ -1,0 +1,138 @@
+{% load static %}
+
+<aside class="filter-sidebar">
+    <form id="filters" class="filters" method="get">
+
+        <section class="filter-block">
+            <header class="filter-head"><h3 class="filter-title">Categories</h3></header>
+            <div class="filter-body">
+                <label class="select-wrap">
+                    <select id="category-select" aria-label="Categories">
+                        <option value="" disabled
+                                {% if request.resolver_match.url_name != 'category-by-name' %}selected{% endif %}>
+                            Select category
+                        </option>
+                        {% for c in categories %}
+                            <option value="{% url 'category-by-name' name=c.name %}"
+                                    {% if current_category and c.id == current_category.id %}selected{% endif %}>
+                                {{ c.name }}
+                            </option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+        </section>
+
+        <section class="filter-block">
+            <header class="filter-head"><h3 class="filter-title">Price</h3></header>
+            <div class="filter-body">
+                <div class="dual-range" data-min="{{ price_min }}" data-max="{{ price_max }}">
+
+                    <input
+                            id="price_min"
+                            class="range"
+                            type="range"
+                            name="min"
+                            min="{{ price_min }}"
+                            max="{{ price_max }}"
+                            step="0.01"
+                            value="{{ min }}"
+                            {% if price_disabled %}disabled{% endif %}
+                            aria-label="Minimum price"
+                    />
+
+                    <input
+                            id="price_max"
+                            class="range"
+                            type="range"
+                            name="max"
+                            min="{{ price_min }}"
+                            max="{{ price_max }}"
+                            step="0.01"
+                            value="{{ max }}"
+                            {% if price_disabled %}disabled{% endif %}
+                            aria-label="Maximum price"
+                    />
+                </div>
+
+                <div class="range-meta">
+                              <span class="price-label">
+                                Price:
+                                <strong>
+                                  <span id="min_value">{{ min }}</span> BGN —
+                                  <span id="max_value">{{ max }}</span> BGN
+                                </strong>
+                              </span>
+                </div>
+            </div>
+        </section>
+
+        <section class="filter-block">
+            <header class="filter-head"><h3 class="filter-title">Stones</h3></header>
+            <div class="filter-body">
+                <label class="select-wrap">
+                    <select name="stone" form="filters">
+                        <option value="">Select Stones</option>
+                        {% for s in stones %}
+                            <option value="{{ s }}"
+                                    {% if s|lower == stone|lower %}selected{% endif %}>{{ s }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+        </section>
+
+        <section class="filter-block">
+            <header class="filter-head"><h3 class="filter-title">Color</h3></header>
+            <div class="filter-body">
+                <label class="select-wrap">
+                    <select name="color">
+                        <option value="">Select Colors</option>
+                        {% for value, label in colors %}
+                            <option value="{{ value }}"
+                                    {% if value == color %}selected{% endif %}>{{ label }}</option>
+                        {% endfor %}
+                    </select>
+                </label>
+            </div>
+        </section>
+
+        <section class="filter-block">
+            <header class="filter-head"><h3 class="filter-title">Material</h3></header>
+            <div class="filter-body">
+                <label class="select-wrap">
+                    <select name="mm" form="filters">
+                        <option value="">Material</option>
+
+                        {% if metals %}
+                            <optgroup label="Metals">
+                                {% for value, label in metals %}
+                                    <option value="metal:{{ value }}"
+                                            {% if 'metal:'|add:value == mm %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </optgroup>
+                        {% endif %}
+
+                        {% if materials %}
+                            <optgroup label="Materials">
+                                {% for value, label in materials %}
+                                    <option value="material:{{ value }}"
+                                            {% if 'material:'|add:value == mm %}selected{% endif %}>{{ label }}</option>
+                                {% endfor %}
+                            </optgroup>
+                        {% endif %}
+
+                    </select>
+                </label>
+            </div>
+        </section>
+
+        <button class="btn btn-small" type="submit" {% if price_disabled %}disabled{% endif %}>
+            Filter
+        </button>
+    </form>
+</aside>
+
+{% block category-filter-js %}
+    <script src="{% static 'js/components/category-filter.js' %}"></script>
+{% endblock %}

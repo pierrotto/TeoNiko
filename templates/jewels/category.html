@@ -1,0 +1,138 @@
+{% extends 'common/base.html' %}
+{% load static %}
+{% load money %}
+
+{% block category_css %}
+    <link rel="stylesheet" href="{% static 'css/category/category.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main class="container page">
+
+        {% include 'jewels/category-filter.html' %}
+
+        <section class="content">
+            <div class="toolbar">
+                <div class="left">
+                    <h1 class="category-title">{{ current_category.name|upper }}</h1>
+                </div>
+
+                <div class="right controls">
+                    <label class="control">
+                        <span>Sort by:</span>
+                        <select name="order" form="filters">
+                            <option value="newest" {% if order == 'newest' %}selected{% endif %}>Newest first</option>
+                            <option value="price_asc" {% if order == 'price_asc' %}selected{% endif %}>Price: low →
+                                high
+                            </option>
+                            <option value="price_desc" {% if order == 'price_desc' %}selected{% endif %}>Price: high →
+                                low
+                            </option>
+                        </select>
+                    </label>
+
+                    <div class="view-toggles" role="group" aria-label="View">
+                        {% with current_view=request.GET.view|default:'grid' %}
+                            <a class="icon-btn {% if request.GET.view|default:'grid' == 'grid' %}active{% endif %}"
+                               href="?{{ qs }}{% if qs %}&{% endif %}view=grid">▦</a>
+                            <a class="icon-btn {% if request.GET.view == 'list' %}active{% endif %}"
+                               href="?{{ qs }}{% if qs %}&{% endif %}view=list">≣</a>
+                        {% endwith %}
+                    </div>
+                </div>
+            </div>
+
+            {% with current_view=request.GET.view|default:'grid' %}
+                <ul class="product-grid product-grid--{{ current_view }}">
+                    {% for product in object_list %}
+
+                        <li class="product-card">
+
+                            <a class="product-thumb js-qv"
+                               href="#"
+                               data-qv-url="{% url 'jewel-quick-view' pk=product.pk slug=product.slug %}">
+                                {% with p=product.photos.all.0 %}
+                                    {% if p %}
+                                        <img src="{{ p.image.url }}" alt="{{ product.name }}">
+                                    {% else %}
+                                        <img src="{% static 'images/placeholders/category.jpg' %}"
+                                             alt="{{ product.name }}">
+                                    {% endif %}
+                                {% endwith %}
+                            </a>
+
+                            <div class="product-info">
+                                <h2 class="product-title product-title--big">
+                                    <a class="js-qv" href="#"
+                                       data-qv-url="{% url 'jewel-quick-view' pk=product.pk slug=product.slug %}"
+                                    >{{ product.name }}</a>
+                                </h2>
+
+                                <div class="rating-stars" data-rating="{{ product.rating|default:0 }}"
+                                     aria-label="Rating">
+                                    <button type="button" class="star" aria-label="1 star"><i class="far fa-star"></i>
+                                    </button>
+                                    <button type="button" class="star" aria-label="2 stars"><i class="far fa-star"></i>
+                                    </button>
+                                    <button type="button" class="star" aria-label="3 stars"><i class="far fa-star"></i>
+                                    </button>
+                                    <button type="button" class="star" aria-label="4 stars"><i class="far fa-star"></i>
+                                    </button>
+                                    <button type="button" class="star" aria-label="5 stars"><i class="far fa-star"></i>
+                                    </button>
+                                    <span class="rating-count">({{ product.reviews_count|default:0 }})</span>
+                                </div>
+
+                                <div class="card-actions">
+                                    <button class="like-btn" type="button"
+                                            aria-pressed="false"
+                                            title="Add to favourites"
+                                            data-jewel-id="{{ product.id }}">
+                                        <i class="far fa-heart" aria-hidden="true"></i>
+                                    </button>
+                                </div>
+
+                                <div class="price-row">
+                                    <span class="price price--big">
+                                    {{ product.price }} BGN
+                                    <span class="price-eur">({{ product.price|to_eur }} €)</span>
+                                    </span>
+
+                                    <a class="btn btn-details"
+                                       href="{% url 'jewel-details' pk=product.id slug=product.slug %}">Details</a>
+                                </div>
+                            </div>
+                        </li>
+
+                    {% empty %}
+                        <p>No products for this filter.</p>
+                    {% endfor %}
+
+                </ul>
+            {% endwith %}
+
+            {% if is_paginated %}
+                <nav class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a class="page prev"
+                           href="?{{ qs }}{% if qs %}&{% endif %}page={{ page_obj.previous_page_number }}">‹</a>
+                    {% endif %}
+                    {% for p in paginator.page_range %}
+                        <a class="page {% if p == page_obj.number %}active{% endif %}"
+                           href="?{{ qs }}{% if qs %}&{% endif %}page={{ p }}">{{ p }}</a>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <a class="page next"
+                           href="?{{ qs }}{% if qs %}&{% endif %}page={{ page_obj.next_page_number }}">›</a>
+                    {% endif %}
+                </nav>
+            {% endif %}
+
+        </section>
+    </main>
+
+{% block category_js %}
+    <script src="{% static 'js/components/category.js' %}" defer></script>
+{% endblock %}
+
+{% endblock %}

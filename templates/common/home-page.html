@@ -2,15 +2,14 @@
 {% load static %}
 
 {% block extra_css %}
-    <link rel="stylesheet" href="{% static 'css/styles.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common/styles.css' %}">
 {% endblock %}
 
 {% block content %}
     <main>
 
         <section class="carousel-section">
-            <h2>РАЗГЛЕДАЙ БИЖУТАТА <strong>Teoniko</strong></h2>
-            <p class="carousel-subtitle">Подредени по категории, за да откриеш по-лесно и бързо това което търсиш.</p>
+            <h2 class="my-soul-regular">OUR JEWELRY</h2>
             {% include 'common/carousel.html' %}
         </section>
 

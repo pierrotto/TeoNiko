@@ -1,0 +1,88 @@
+{% extends "common/base.html" %}
+{% load static money %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/jewels/jewel-details.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main class="container jewel-detail">
+        <section class="top">
+            <div class="media">
+                {% with photos=object.photos.all %}
+                    {% if photos %}
+                        <div class="main-wrap">
+                            <img id="main-photo" class="main-photo"
+                                 src="{{ photos.0.image.url }}" alt="{{ object.name }}">
+                        </div>
+                        <div class="thumbs" role="list">
+                            {% for ph in photos|slice:":9" %}
+                                <img class="thumb{% if forloop.first %} is-active{% endif %}"
+                                     src="{{ ph.image.url }}"
+                                     data-src="{{ ph.image.url }}"
+                                     alt="{{ object.name }} thumbnail {{ forloop.counter }}"
+                                     role="button" tabindex="0">
+                            {% endfor %}
+                        </div>
+                    {% endif %}
+                {% endwith %}
+            </div>
+
+            <aside class="summary-wrap">
+                {% include "jewels/partials/jewel-summary.html" with jewel=object materials=materials metals=metals gems=gems %}
+            </aside>
+        </section>
+
+        <section class="tabs">
+            {% if object.tabs.all %}
+                <div class="tablist" role="tablist" aria-label="Jewel info">
+                    {% for t in object.tabs.all %}
+                        <button class="tab"
+                                role="tab"
+                                id="tab-{{ forloop.counter0 }}"
+                                aria-controls="panel-{{ forloop.counter0 }}"
+                                aria-selected="{{ forloop.first|yesno:'true,false' }}">
+                            {{ t.title }}
+                        </button>
+                    {% endfor %}
+                </div>
+
+                {% for t in object.tabs.all %}
+                    <div id="panel-{{ forloop.counter0 }}"
+                         class="panel{% if forloop.first %} is-active{% endif %}"
+                         role="tabpanel"
+                         tabindex="0"
+                         aria-labelledby="tab-{{ forloop.counter0 }}"
+                         {% if not forloop.first %}hidden{% endif %}>
+                        {{ t.body_en|safe }}
+                    </div>
+                {% endfor %}
+            {% else %}
+                <div class="tablist" role="tablist" aria-label="Jewel info">
+                    <button class="tab" role="tab" id="tab-details"
+                            aria-controls="panel-details" aria-selected="true">Details
+                    </button>
+                </div>
+                <div id="panel-details" class="panel is-active" role="tabpanel" tabindex="0"
+                     aria-labelledby="tab-details">
+                    {% if object.long_description_en %}
+                        {{ object.long_description_en|linebreaks }}
+                    {% elif object.specs.all %}
+                        <ul>
+                            {% for s in object.specs.all %}
+                                <li><strong>{{ s.label }}:</strong> {{ s.value }}</li>
+                            {% endfor %}
+                        </ul>
+                    {% else %}
+                        <p>No additional details provided.</p>
+                    {% endif %}
+                </div>
+            {% endif %}
+        </section>
+    </main>
+
+    {% block jewel-details-js %}
+        <script src="{% static 'js/components/jewel-details.js' %}"></script>
+    {% endblock %}
+
+{% endblock %}

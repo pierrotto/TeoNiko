@@ -30,6 +30,39 @@ class GemShapeChoices(models.TextChoices):
     OTHER = 'other', 'OTHER'
 
 
+class GemTypeChoices(models.TextChoices):
+    APATITE = 'apatite', 'APATITE'
+    WHITE_HOWLITE = 'white_howlite', 'WHITE HOWLITE'
+    GREEN_AVENTURINE = 'green_aventurine', 'GREEN AVENTURINE'
+    KYANITE = 'kyanite', 'KYANITE'
+    CORUNDUM = 'corundum', 'CORUNDUM'
+    PREHNITE = 'prehnite', 'PREHNITE'
+    RHYOLITE = 'rhyolite', 'RHYOLITE'
+    RED_JADEITE = 'red_jadeite', 'RED JADEITE'
+    BLACK_TOURMALINE = 'black_tourmaline', 'BLACK TOURMALINE'
+    STRAWBERRY_QUARTZ = 'strawberry_quartz', 'STRAWBERRY QUARTZ'
+    JASPER = 'jasper', 'JASPER'
+    AVENTURINE = 'aventurine', 'AVENTURINE'
+    AMETHYST = 'amethyst', 'AMETHYST'
+    AGATE = 'agate', 'AGATE'
+    GARNET = 'garnet', 'GARNET'
+    JADEITE = 'jadeite', 'JADEITE'
+    CATS_EYE = 'cats_eye', 'CAT\'S EYE'
+    MOONSTONE = 'moonstone', 'MOONSTONE'
+    MALACHITE = 'malachite', 'MALACHITE'
+    MOSS_AGATE = 'moss_agate', 'MOSS AGATE'
+    ONYX = 'onyx', 'ONYX'
+    PERIDOT = 'peridot', 'PERIDOT'
+    ROSE_QUARTZ = 'rose_quartz', 'ROSE QUARTZ'
+    SAPPHIRE = 'sapphire', 'SAPPHIRE'
+    MOTHER_OF_PEARL = 'mother_of_pearl', 'MOTHER OF PEARL'
+    TURQUOISE = 'turquoise', 'TURQUOISE'
+    UNAKITE = 'unakite', 'UNAKITE'
+    HEMATITE = 'hematite', 'HEMATITE'
+    HOWLITE = 'howlite', 'HOWLITE'
+    CHERRY_QUARTZ = 'cherry_quartz', 'CHERRY QUARTZ'
+
+
 class GemColorChoices(models.TextChoices):
     GREEN = 'green', 'GREEN'
     DARK_GREEN = 'dark green', 'DARK GREEN'
@@ -56,3 +89,18 @@ class GemColorChoices(models.TextChoices):
     STEEL_SILVER = 'steel_silver', 'STEEL_SILVER'
     OTHER = 'other', 'OTHER'
 
+
+class JewelMetalChoices(models.TextChoices):
+    MEDICAL_STEEL_316L = 'medical_steel_316l', 'MEDICAL_STEEL_316L'
+    STAINLESS_STEEL = 'stainless_steel', 'STAINLESS_STEEL'
+    SILVER = 'silver', 'SILVER'
+    GOLD = 'gold', 'GOLD'
+    PLATINUM = 'platinum', 'PLATINUM'
+
+class JewelMaterialChoices(models.TextChoices):
+    EPOXY = 'epoxy', 'EPOXY'
+    WOOD = 'wood', 'WOOD'
+    ENAMEL = 'enamel', 'ENAMEL'
+    LEATHER = 'leather', 'LEATHER'
+    GLASS_BEADS = 'glass_beads', 'GLASS_BEADS'
+    JAPANESE_TOHO_BEADS = 'japanese_toho_beads', 'JAPANESE_TOHO_BEAD'

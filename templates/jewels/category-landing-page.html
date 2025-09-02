@@ -1,0 +1,91 @@
+{% extends 'common/base.html' %}
+{% load static %}
+
+{% block category_css %}
+    <link rel="stylesheet" href="{% static 'css/category/category.css' %}">
+    <style>
+        /* place right column content in col 2 of the .page grid */
+        .page-main {
+            grid-column: 2;
+        }
+
+        /* small tweaks so a "category card" looks like a product card */
+        .product-grid.categories .product-info {
+            align-items: center;
+        }
+
+        .product-grid.categories .product-title {
+            text-transform: uppercase;
+            text-align: center;
+        }
+
+        .product-grid.categories .product-thumb {
+            aspect-ratio: 4 / 3;
+        }
+
+        /* like your carousel tiles */
+    </style>
+{% endblock %}
+
+{% block content %}
+    <main class="container page">
+
+        {% include 'jewels/category-filter.html' %}
+
+        {# === RIGHT: categories grid/list === #}
+        <section class="page-main">
+            <div class="toolbar">
+                <h1 class="category-title">Our jewelry</h1>
+            </div>
+
+            <ul class="product-grid product-grid--grid categories">
+                {% for cat in categories %}
+                    <li class="product-card">
+                        <a href="{% url 'category-by-name' name=cat.name %}" class="product-thumb"
+                           aria-label="{{ cat.name }}">
+                            {% with cover=cat.photos_sorted.0 %}
+                                {% if cover %}
+                                    <img src="{{ cover.image.url }}" alt="{{ cat.name }}">
+                                {% elif cat.photos.first %}
+                                    <img src="{{ cat.photos.first.image.url }}" alt="{{ cat.name }}">
+                                {% else %}
+                                    <img src="{% static 'images/placeholders/category.jpg' %}" alt="{{ cat.name }}">
+                                {% endif %}
+                            {% endwith %}
+                        </a>
+                        <div class="product-info">
+                            <h3 class="product-title">{{ cat.name }}</h3>
+                        </div>
+                    </li>
+                {% endfor %}
+            </ul>
+
+            {% if is_paginated %}
+                <nav class="pagination">
+                    {% if page_obj.has_previous %}
+                        <a class="page prev" href="?page={{ page_obj.previous_page_number }}">‹</a>
+                    {% endif %}
+                    {% for p in paginator.page_range %}
+                        <a class="page {% if p == page_obj.number %}active{% endif %}" href="?page={{ p }}">{{ p }}</a>
+                    {% endfor %}
+                    {% if page_obj.has_next %}
+                        <a class="page next" href="?page={{ page_obj.next_page_number }}">›</a>
+                    {% endif %}
+                </nav>
+            {% endif %}
+        </section>
+    </main>
+
+    <script>
+        // Keep view & sort in sync with current querystring when switching pages, etc.
+        // If you have a <form id="filters"> on the page (from your included filter),
+        // the "Sort by" <select> will submit via that form.
+
+        // Optional: if you want the select to auto-submit:
+        const filtersForm = document.getElementById('filters');
+        const orderSel = document.querySelector('select[name="order"]');
+        if (filtersForm && orderSel) {
+            orderSel.addEventListener('change', () => filtersForm.submit());
+        }
+    </script>
+{% endblock %}

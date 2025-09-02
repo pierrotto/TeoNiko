@@ -1,0 +1,30 @@
+{% load money %}
+<div class="qv">
+  <div class="qv-media">
+    {% with photos=object.photos.all %}
+      {% if photos %}
+        <div class="qv-main-wrap">
+          <img id="qv-main" class="qv-main"
+               src="{{ photos.0.image.url }}"
+               alt="{{ object.name }}">
+        </div>
+
+        <div class="qv-thumbs" role="list">
+          {% for ph in photos|slice:":9" %}
+            <img
+              class="qv-thumb{% if forloop.first %} is-active{% endif %}"
+              src="{{ ph.image.url }}"
+              data-src="{{ ph.image.url }}"
+              alt="{{ object.name }} thumbnail {{ forloop.counter }}"
+              role="button" tabindex="0"
+            >
+          {% endfor %}
+        </div>
+      {% endif %}
+    {% endwith %}
+  </div>
+
+  <div class="qv-info">
+    {% include "jewels/partials/jewel-summary.html" with jewel=object materials=materials metals=metals gems=gems %}
+  </div>
+</div>

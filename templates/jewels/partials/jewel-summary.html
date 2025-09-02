@@ -1,0 +1,36 @@
+{% load money %}
+
+<div class="summary">
+    <h1 class="title">
+        {% firstof jewel.short_description jewel.short_description jewel.name %}
+    </h1>
+
+    <p class="price">
+        {{ jewel.price }} BGN
+        <span class="eur">({{ jewel.price|to_eur }} €)</span>
+    </p>
+
+    {% with desc=jewel.long_description|default:jewel.long_description %}
+        {% if desc|length %}
+            <div class="desc">{{ desc|linebreaks }}</div>
+        {% else %}
+            <ul class="specs">
+                {% for s in jewel.specs.all %}
+                    {% if s.label %}
+                    <li><strong>{{ s.label }}:</strong> {{ s.value }}</li>
+                    {% else %}
+                    <li> {{ s.value }} </li>
+                    {% endif %}
+                {% empty %}
+                {% endfor %}
+            </ul>
+        {% endif %}
+    {% endwith %}
+
+    <div class="meta">
+        <div><strong>Exchange rate:</strong> 1 EUR = {{ bgn_per_eur }} BGN</div>
+        <div><strong>Availability:</strong> {% if jewel.is_available %}In stock{% else %}Made to order{% endif %}</div>
+        {% if jewel.code %}
+            <div><strong>Product code:</strong> {{ jewel.code }}</div>{% endif %}
+    </div>
+</div>

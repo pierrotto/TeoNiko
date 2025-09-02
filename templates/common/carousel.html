@@ -16,7 +16,11 @@
                             <img src="{% static 'category_images/placeholder.jpeg' %}" alt="No image">
                         {% endif %}
                     {% endwith %}
-                    <p>{{ category.get_name_display }} ➞</p>
+                    <p>
+                        <a href="{% url 'category-by-name' name=category.name %}">
+                            {{ category.get_name_display|upper }}
+                        </a>
+                    </p>
                 </div>
             {% endfor %}
 
@@ -30,7 +34,11 @@
                             <img src="{% static 'category_images/placeholder.jpeg' %}" alt="No image">
                         {% endif %}
                     {% endwith %}
-                    <p>{{ category.get_name_display }} ➞</p>
+                    <p>
+                        <a href="{% url 'category-by-name' name=category.name %}">
+                            {{ category.get_name_display|upper }}
+                        </a>
+                    </p>
                 </div>
             {% endfor %}
 
@@ -44,7 +52,11 @@
                             <img src="{% static 'category_images/placeholder.jpeg' %}" alt="No image">
                         {% endif %}
                     {% endwith %}
-                    <p>{{ category.get_name_display }} ➞</p>
+                    <p>
+                        <a href="{% url 'category-by-name' name=category.name %}">
+                            {{ category.get_name_display|upper }}
+                        </a>
+                    </p>
                 </div>
             {% endfor %}
         </div>

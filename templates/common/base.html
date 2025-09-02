@@ -2,19 +2,25 @@
 
 <!DOCTYPE html>
 <html lang="bg">
+
 <head>
     <meta charset="UTF-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
     <title>Teoniko Navigation</title>
-    <link rel="stylesheet" href="{% static 'css/nav.css' %}"/>
+    <link rel="stylesheet" href="{% static 'css/common/nav.css' %}"/>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css"/>
-
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=My+Soul&display=swap" rel="stylesheet">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=My+Soul&display=swap"
+          rel="stylesheet">
+    <link rel="stylesheet" href="{% static 'css/components/quick-view.css' %}">
 
     {% block extra_css %}{% endblock %}
+    {% block category_css %}{% endblock %}
 </head>
+
 <body>
 
 {% include 'common/nav.html' %}
@@ -23,6 +29,20 @@
 {% endblock %}
 
 {% include 'common/footer.html' %}
+
+<div id="qv-modal" class="qv-modal" aria-hidden="true">
+    <div class="qv-overlay" data-qv-close></div>
+    <div class="qv-dialog" role="dialog" aria-modal="true" aria-labelledby="qv-title" tabindex="-1">
+        <button class="qv-close" type="button" aria-label="Close" data-qv-close>×</button>
+        <div id="qv-body" class="qv-body">New content here</div>
+    </div>
+</div>
+
+<script src="{% static 'js/components/quick-view.js' %}" defer></script>
+
+{% block category_js %}{% endblock %}
+{% block jewel-details-js %}{% endblock %}
+{% block category-filter-js %}{% endblock %}
 
 </body>
 </html>

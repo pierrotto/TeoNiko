@@ -2,57 +2,53 @@
 
 <nav class="navbar">
 
-    <div class="navbar-logo">
+    <a href="{% url 'home' %}" class="navbar-logo">
         <img src="{% static 'images/teoniko_logo.svg' %}" alt="Teoniko logo"/>
         <div class="logo-text">
-            <span class="my-soul-regular">Teoniko</span><br/>
-            <span class="subtitle">Бижута с харизма</span>
+            <span class="my-soul-regular">TeoNiko</span><br/>
+            <span class="subtitle">Enchanting Jewels</span>
         </div>
-    </div>
-
+    </a>
 
     <ul class="navbar-menu">
         <li class="dropdown">
-            <a href="#">БИЖУТА <i class="fas fa-caret-down"></i></a>
+            <a href="{% url 'category-all' %}">JEWELRY<i class="fas fa-caret-down"></i></a>
             <ul class="dropdown-menu">
-                <li><a href="#">Обеци</a></li>
-                <li><a href="#">Гривни</a></li>
-                <li><a href="#">Пръстени</a></li>
-                <li><a href="#">Колиета</a></li>
-                <li><a href="#">Висулки</a></li>
-                <li><a href="#">Комплекти</a></li>
-                <li><a href="#">Бужу според име, дата на раждане и зодия</a></li>
-                <li><a href="#">Ланци</a></li>
-                <li><a href="#">Вериги за панталон</a></li>
-                <li><a href="#">Връзки за очила</a></li>
-                <li><a href="#">Гривни за глезен</a></li>
-                <li><a href="#">Броеници</a></li>
-                <li><a href="#">Колани</a></li>
-                <li><a href="#">Бижута за коса</a></li>
-                <li><a href="#">Вериги за тяло</a></li>
-                <li><a href="#">Ключодържатели</a></li>
-                <li><a href="#">Брошки</a></li>
-                <li><a href="#">Книгоразделители</a></li>
+
+                {% for c in categories %}
+                    <li><a href="{% url 'category-by-name' name=c.name %}">{{ c.name|upper }}</a></li>
+                {% endfor %}
+
             </ul>
         </li>
-        <li><a href="#">ПРОМОЦИЯ 40%</a></li>
-        <li><a href="#">КУТИИ ЗА БИЖУТА</a></li>
-        <li><a href="#">ПОДАРЪЧНИ КУТИИ</a></li>
         <li class="dropdown">
-            <a href="#">КОЛЕКЦИИ <i class="fas fa-caret-down"></i></a>
+            <a href="#">JEWELRY SETS<i class="fas fa-caret-down"></i></a>
             <ul class="dropdown-menu">
-                <li><a href="#">КОЛЕДЕН БЛЯСЪК</a></li>
-                <li><a href="#">КОЛЕКЦИЯ МАНДАЛИ</a></li>
-                <li><a href="#">ПРОЛЕТНО ВЪЛШЕБСТВО</a></li>
-                <li><a href="#">КОЛЕКЦИЯ ШЕВИЦИ</a></li>
-                <li><a href="#">ЕСЕННА ПОЕЗИЯ 2020</a></li>
-                <li><a href="#">ЗИМНИ ЦВЕТЯ 2020</a></li>
-                <li><a href="#">КОЛЕКЦИЯ БОЖЕСТВЕНА</a></li>
+                <li><a href="#">CHRISTMAS SPARKLE</a></li>
+                <li><a href="#">MANDALA COLLECTION</a></li>
+                <li><a href="#">SPRING MAGIC</a></li>
+                <li><a href="#">FOLK EMBROIDERY COLLECTION</a></li>
+                <li><a href="#">AUTUMN POETRY 2020</a></li>
+                <li><a href="#">WINTER FLOWERS 2020</a></li>
+                <li><a href="#">DIVINE COLLECTION</a></li>
             </ul>
         </li>
-        <li><a href="#">ЗА МЕН</a></li>
-        <li><a href="#">БЛОГ</a></li>
-        <li><a href="#">КОНТАКТИ</a></li>
+        <li class="dropdown">
+            <a href="#">COLLECTIONS<i class="fas fa-caret-down"></i></a>
+            <ul class="dropdown-menu">
+                <li><a href="#">CHRISTMAS SPARKLE</a></li>
+                <li><a href="#">MANDALA COLLECTION</a></li>
+                <li><a href="#">SPRING MAGIC</a></li>
+                <li><a href="#">FOLK EMBROIDERY COLLECTION</a></li>
+                <li><a href="#">AUTUMN POETRY 2020</a></li>
+                <li><a href="#">WINTER FLOWERS 2020</a></li>
+                <li><a href="#">DIVINE COLLECTION</a></li>
+            </ul>
+        </li>
+        <li><a href="#" class="nav-sale" aria-label="Forty percent discount">40% DISCOUNT</a></li>
+        <li><a href="#">LEARN ABOUT ME</a></li>
+        <li><a href="#">VISIT MY BLOG</a></li>
+        <li><a href="#">CONTACTS</a></li>
     </ul>
 
     <div class="navbar-icons-circle">
