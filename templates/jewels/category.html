@@ -22,21 +22,41 @@
                         <span>Sort by:</span>
                         <select name="order" form="filters">
                             <option value="newest" {% if order == 'newest' %}selected{% endif %}>Newest first</option>
+                            <option value="newest" {% if order == 'newest' %}selected{% endif %}>Oldest first</option>
                             <option value="price_asc" {% if order == 'price_asc' %}selected{% endif %}>Price: low →
                                 high
                             </option>
                             <option value="price_desc" {% if order == 'price_desc' %}selected{% endif %}>Price: high →
                                 low
                             </option>
+                            <option value="rating_desc" {% if order == 'rating_desc' %}selected{% endif %}>
+                                Rating: high → low
+                            </option>
+                            <option value="rating_desc" {% if order == 'rating_desc' %}selected{% endif %}>
+                                Rating: low → high
+                            </option>
                         </select>
                     </label>
 
                     <div class="view-toggles" role="group" aria-label="View">
                         {% with current_view=request.GET.view|default:'grid' %}
-                            <a class="icon-btn {% if request.GET.view|default:'grid' == 'grid' %}active{% endif %}"
-                               href="?{{ qs }}{% if qs %}&{% endif %}view=grid">▦</a>
-                            <a class="icon-btn {% if request.GET.view == 'list' %}active{% endif %}"
-                               href="?{{ qs }}{% if qs %}&{% endif %}view=list">≣</a>
+                            <a
+                                    class="icon-btn {% if request.GET.view|default:'grid' == 'grid' %}active{% endif %}"
+                                    href="?{{ qs }}{% if qs %}&{% endif %}view=grid"
+                                    aria-label="Grid view"
+                                    title="Grid view"
+                            >
+                                <i class="fa-solid fa-table-cells" aria-hidden="true"></i>
+                            </a>
+
+                            <a
+                                    class="icon-btn {% if request.GET.view == 'list' %}active{% endif %}"
+                                    href="?{{ qs }}{% if qs %}&{% endif %}view=list"
+                                    aria-label="List view"
+                                    title="List view"
+                            >
+                                <i class="fa-solid fa-list-ul" aria-hidden="true"></i>
+                            </a>
                         {% endwith %}
                     </div>
                 </div>
@@ -102,6 +122,27 @@
                                        href="{% url 'jewel-details' pk=product.id slug=product.slug %}">Details</a>
                                 </div>
                             </div>
+
+                            {% if request.GET.view == 'list' %}
+                                <div class="product-extra">
+                                    {% with s=product.short_description|default_if_none:'' l=product.long_description|default_if_none:'' %}
+                                        {% if s or l %}
+                                            <p class="snip-text">
+                                                {{ s|striptags }}{% if s and l %}<br><br>{% endif %}{{ l|striptags }}
+                                            </p>
+                                        {% endif %}
+                                    {% endwith %}
+
+                                    <ul class="snip-specs">
+                                        {% for s in product.specs.all %}
+                                            <li>
+                                                {% if s.label %}<strong>{{ s.label }}:</strong>{% endif %}
+                                                {{ s.value }}
+                                            </li>
+                                        {% endfor %}
+                                    </ul>
+                                </div>
+                            {% endif %}
                         </li>
 
                     {% empty %}
@@ -131,8 +172,8 @@
         </section>
     </main>
 
-{% block category_js %}
-    <script src="{% static 'js/components/category.js' %}" defer></script>
-{% endblock %}
+    {% block category_js %}
+        <script src="{% static 'js/components/category.js' %}" defer></script>
+    {% endblock %}
 
 {% endblock %}

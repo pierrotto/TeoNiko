@@ -17,7 +17,6 @@ document.addEventListener('DOMContentLoaded', () => {
         body.innerHTML = '';
     }
 
-    // Open QV
     document.addEventListener('click', async (e) => {
         const link = e.target.closest('.js-qv');
         if (!link) return;
@@ -38,7 +37,6 @@ document.addEventListener('DOMContentLoaded', () => {
         }
     });
 
-    // Close QV
     modal.addEventListener('click', (e) => {
         if (e.target.matches('[data-qv-close], .qv-overlay')) closeModal();
     });
@@ -98,7 +96,15 @@ document.addEventListener('DOMContentLoaded', () => {
         main.addEventListener('blur', zoomOut);
     }
 
-    // ===== Cursor-follow zoom on category cards =====
+    document.addEventListener('change', (e) => {
+        const sel = e.target.closest('select[name="order"]');
+        if (!sel) return;
+        const url = new URL(window.location.href);
+        url.searchParams.set('order', sel.value);
+        url.searchParams.delete('page');
+        window.location.assign(url.toString());
+    });
+
     document.querySelectorAll('.content .product-thumb').forEach(thumb => {
         const img = thumb.querySelector('img');
         if (!img) return;
@@ -117,4 +123,60 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     });
 });
+
+(function () {
+    const SEL_CARD = '.product-grid--list .product-card';
+
+    const px = n => (isNaN(n) ? 0 : parseFloat(n));
+
+    function fitOneCard(card) {
+        const extra = card.querySelector('.product-extra');
+        if (!extra) return;
+
+        const csExtra = getComputedStyle(extra);
+        const cardH = card.getBoundingClientRect().height;
+        const padTB = px(csExtra.paddingTop) + px(csExtra.paddingBottom);
+        const available = Math.max(0, cardH - padTB);   // no overflow
+
+        extra.style.maxHeight = available + 'px';
+
+        let remaining = available;
+
+        const desc = extra.querySelector('.snip-text');
+        if (desc) {
+            const lh = px(getComputedStyle(desc).lineHeight) || 20;
+            const maxLines = Math.max(0, Math.floor(remaining / lh));
+            desc.style.setProperty('--desc-lines', String(maxLines));
+            desc.style.webkitLineClamp = String(maxLines);
+
+            remaining = Math.max(0, remaining - Math.min(maxLines * lh, desc.scrollHeight) - 8);
+        }
+
+        const specs = extra.querySelector('.snip-specs');
+        if (specs) {
+            const items = Array.from(specs.children);
+            items.forEach(li => li.style.display = ''); // reset
+
+            const probeH = items[0] ? items[0].getBoundingClientRect().height : 18;
+            const canShow = Math.max(0, Math.floor(remaining / probeH));
+            items.forEach((li, i) => {
+                li.style.display = i < canShow ? '' : 'none';
+            });
+        }
+    }
+
+    function fitAll() {
+        document.querySelectorAll(SEL_CARD).forEach(fitOneCard);
+    }
+
+    document.addEventListener('DOMContentLoaded', fitAll);
+    window.addEventListener('load', fitAll);
+
+    let t;
+    window.addEventListener('resize', () => {
+        clearTimeout(t);
+        t = setTimeout(fitAll, 120);
+    });
+})();
+
 
