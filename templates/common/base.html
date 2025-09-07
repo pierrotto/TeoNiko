@@ -16,6 +16,7 @@
     <link href="https://fonts.googleapis.com/css2?family=Dancing+Script:wght@400..700&family=My+Soul&display=swap"
           rel="stylesheet">
     <link rel="stylesheet" href="{% static 'css/components/quick-view.css' %}">
+    <link rel="stylesheet" href="{% static 'css/components/ratings.css' %}">
 
     {% block extra_css %}{% endblock %}
     {% block category_css %}{% endblock %}
@@ -25,8 +26,7 @@
 
 {% include 'common/nav.html' %}
 
-{% block content %}
-{% endblock %}
+{% block content %}{% endblock %}
 
 {% include 'common/footer.html' %}
 
@@ -38,6 +38,7 @@
     </div>
 </div>
 
+<script src="{% static 'js/components/ratings.js' %}" defer></script>
 <script src="{% static 'js/components/quick-view.js' %}" defer></script>
 
 {% block category_js %}{% endblock %}

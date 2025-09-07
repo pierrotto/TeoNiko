@@ -84,8 +84,8 @@ class Jewel(models.Model):
     rating_avg = models.DecimalField(
         max_digits=3,
         decimal_places=2,
-        default=0
-    )
+        default=0,
+        db_index=True)
 
     rating_count = models.PositiveIntegerField(
         default=0
@@ -355,6 +355,7 @@ class JewelSet(models.Model):
     name = models.CharField(
         max_length=60
     )
+
     slug = models.SlugField(
         max_length=140,
         unique=True,
@@ -434,7 +435,6 @@ class JewelSet(models.Model):
 
     @property
     def categories(self):
-        # Distinct list of category names of items inside the set
         return list(self.jewels.values_list('category__name', flat=True).distinct())
 
 

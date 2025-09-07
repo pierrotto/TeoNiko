@@ -3,6 +3,10 @@
 <aside class="filter-sidebar">
     <form id="filters" class="filters" method="get">
 
+        {% if request.GET.view %}
+            <input type="hidden" name="view" value="{{ request.GET.view }}">
+        {% endif %}
+
         <section class="filter-block">
             <header class="filter-head"><h3 class="filter-title">Categories</h3></header>
             <div class="filter-body">

@@ -1,0 +1,19 @@
+.rating-stars .star i {
+  color: #c9c9c9;
+  transition: color .15s ease-in-out;
+}
+
+.rating-stars .star.filled i {
+  color: #ffb400;
+}
+
+.rating-stars .star:hover i {
+  filter: brightness(1.1);
+}
+
+.rating-stars .star {
+  background: none;
+  border: 0;
+  padding: 0 2px;
+  cursor: pointer;
+}

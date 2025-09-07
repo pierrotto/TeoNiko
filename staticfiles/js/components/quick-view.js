@@ -31,6 +31,7 @@
             try {
                 const res = await fetch(link.dataset.qvUrl, {headers: {'X-Requested-With': 'XMLHttpRequest'}});
                 body.innerHTML = await res.text();
+                if (window.initRatings) window.initRatings(body);
                 dialog.focus();
             } catch {
                 body.innerHTML = '<div style="padding:24px;color:#b00">Failed to load.</div>';

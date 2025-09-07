@@ -12,6 +12,7 @@ https://docs.djangoproject.com/en/5.2/ref/settings/
 
 from pathlib import Path
 from decouple import config, Csv
+from django.urls import reverse_lazy
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -30,9 +31,9 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', cast=Csv(), default='')
 
 # Application definition
 PROJECT_APPS = [
-    "TeoNiko.accounts",
     "TeoNiko.jewels",
-    "TeoNiko.common",
+    "TeoNiko.accounts.apps.AccountsConfig",
+    "TeoNiko.common.apps.CommonConfig",
 ]
 
 INSTALLED_APPS = [
@@ -75,6 +76,9 @@ TEMPLATES = [
 
 WSGI_APPLICATION = "TeoNiko.wsgi.application"
 
+AUTHENTICATION_BACKENDS = [
+    'TeoNiko.accounts.auth_backends.EmailBackend',
+]
 
 # Database
 # https://docs.djangoproject.com/en/5.2/ref/settings/#databases
@@ -138,3 +142,7 @@ MEDIA_ROOT = BASE_DIR / 'media'
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+LOGIN_URL = "/accounts/auth/"
+LOGIN_REDIRECT_URL = '/'
+LOGOUT_REDIRECT_URL = '/'

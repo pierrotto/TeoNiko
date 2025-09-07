@@ -5,6 +5,22 @@
         {% firstof jewel.short_description jewel.short_description jewel.name %}
     </h1>
 
+    <div class="rating-stars"
+         data-avg="{{ jewel.rating_avg|default:0 }}"
+         data-count="{{ jewel.rating_count|default:0 }}"
+         data-my="{{ user_rating|default:'' }}"
+         data-show-count="0"
+         data-rate-url="{% url 'api:rate-jewel' pk=jewel.id %}"
+         aria-label="Rating">
+        {% for _ in "12345" %}
+            <button type="button" class="star" data-value="{{ forloop.counter }}"
+                    aria-label="{{ forloop.counter }} star">
+                <i class="far fa-star"></i>
+            </button>
+        {% endfor %}
+        <span class="rating-count">({{ jewel.rating_avg|default:0|floatformat:1 }}/5)</span>
+    </div>
+
     <p class="price">
         {{ jewel.price }} BGN
         <span class="eur">({{ jewel.price|to_eur }} €)</span>
@@ -17,9 +33,9 @@
             <ul class="specs">
                 {% for s in jewel.specs.all %}
                     {% if s.label %}
-                    <li><strong>{{ s.label }}:</strong> {{ s.value }}</li>
+                        <li><strong>{{ s.label }}:</strong> {{ s.value }}</li>
                     {% else %}
-                    <li> {{ s.value }} </li>
+                        <li> {{ s.value }} </li>
                     {% endif %}
                 {% empty %}
                 {% endfor %}

@@ -28,6 +28,7 @@ document.addEventListener('DOMContentLoaded', () => {
             const res = await fetch(link.dataset.qvUrl, {headers: {'X-Requested-With': 'XMLHttpRequest'}});
             const html = await res.text();
             body.innerHTML = html;
+            if (window.initRatings) window.initRatings(body);
 
             wireThumbs();
             wireQVMagnify();

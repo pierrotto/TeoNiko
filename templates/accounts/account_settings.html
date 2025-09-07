@@ -1,0 +1,115 @@
+{% load static %}
+
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>Account settings</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="{% static 'css/accounts/account-settings.css' %}"/>
+</head>
+<body>
+<div class="wrap">
+    <div class="page-head">
+        <h1>Account settings</h1>
+
+        <form action="{% url 'logout' %}" method="post" class="logout-form">
+            {% csrf_token %}
+            <button type="submit" class="logout-btn">Logout</button>
+        </form>
+    </div>
+
+    <div class="grid">
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <h2>Personal info</h2>
+            <div class="field">
+                <label for="{{ user_form.first_name.id_for_label }}">First name</label>
+                {{ user_form.first_name }}{% for e in user_form.first_name.errors %}
+                    <div class="errors">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="field">
+                <label for="{{ user_form.last_name.id_for_label }}">Last name</label>
+                {{ user_form.last_name }}{% for e in user_form.last_name.errors %}
+                    <div class="errors">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="field">
+                <label for="{{ user_form.email.id_for_label }}">Email</label>
+                {{ user_form.email }}{% for e in user_form.email.errors %}
+                    <div class="errors">{{ e }}</div>{% endfor %}
+            </div>
+            <button type="submit" name="save-user">Save personal info</button>
+        </form>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <h2>Username</h2>
+            <div class="field">
+                <label for="{{ username_form.username.id_for_label }}">Username</label>
+                {{ username_form.username }}{% for e in username_form.username.errors %}
+                    <div class="errors">{{ e }}</div>{% endfor %}
+            </div>
+            <button type="submit" name="save-username">Save username</button>
+        </form>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <h2>Change password</h2>
+            <div class="field">
+                <label for="{{ pwd_form.old_password.id_for_label }}">Current password</label>
+                {{ pwd_form.old_password }}{% for e in pwd_form.old_password.errors %}
+                    <div class="errors">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="field">
+                <label for="{{ pwd_form.new_password1.id_for_label }}">New password</label>
+                {{ pwd_form.new_password1 }}{% for e in pwd_form.new_password1.errors %}
+                    <div class="errors">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="field">
+                <label for="{{ pwd_form.new_password2.id_for_label }}">Confirm new password</label>
+                {{ pwd_form.new_password2 }}{% for e in pwd_form.new_password2.errors %}
+                    <div class="errors">{{ e }}</div>{% endfor %}
+            </div>
+            <button type="submit" name="save-password">Save password</button>
+        </form>
+
+        <form method="post" novalidate>
+            {% csrf_token %}
+            <h2>Customer profile</h2>
+            <div class="field">
+                <label for="{{ profile_form.phone.id_for_label }}">Phone</label>
+                {{ profile_form.phone }}{% for e in profile_form.phone.errors %}
+                    <div class="errors">{{ e }}</div>{% endfor %}
+            </div>
+            <div class="field">
+                <label for="{{ profile_form.address_line1.id_for_label }}">Address line 1</label>
+                {{ profile_form.address_line1 }}
+            </div>
+            <div class="field">
+                <label for="{{ profile_form.address_line2.id_for_label }}">Address line 2</label>
+                {{ profile_form.address_line2 }}
+            </div>
+            <div class="field">
+                <label for="{{ profile_form.city.id_for_label }}">City</label>
+                {{ profile_form.city }}
+            </div>
+            <div class="field">
+                <label for="{{ profile_form.province.id_for_label }}">Province</label>
+                {{ profile_form.province }}
+            </div>
+            <div class="field">
+                <label for="{{ profile_form.postal_code.id_for_label }}">Postal code</label>
+                {{ profile_form.postal_code }}
+            </div>
+            <div class="field">
+                <label for="{{ profile_form.country.id_for_label }}">Country</label>
+                {{ profile_form.country }}
+            </div>
+            <button type="submit" name="save-profile">Save customer profile</button>
+        </form>
+
+    </div>
+</div>
+</body>
+</html>

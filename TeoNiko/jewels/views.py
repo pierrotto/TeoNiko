@@ -1,15 +1,15 @@
 from decimal import Decimal, InvalidOperation, ROUND_FLOOR, ROUND_CEILING
 from django.contrib.auth.mixins import LoginRequiredMixin
+from django.contrib.contenttypes.models import ContentType
 from django.db.models import Min, Max, Prefetch
-from django.http import HttpResponse
-from django.template.loader import render_to_string
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, DetailView
+from TeoNiko.common.models import Rating
 from TeoNiko.jewels.forms import JewelAddForm
 from TeoNiko.jewels.mixins import StaffRequiredMixin
 from TeoNiko.jewels.choices import GemColorChoices, JewelMaterialChoices, JewelMetalChoices
 from TeoNiko.jewels.models import Category, Jewel, Photo, Gem, Material, Metal, JewelSpec, JewelTab
-from django.shortcuts import get_object_or_404, redirect
+from django.shortcuts import get_object_or_404
 from TeoNiko.jewels.templatetags.money import RATE as EUR_BGN_RATE
 
 
@@ -112,10 +112,20 @@ class CategoryFilterView(ListView):
             elif kind == 'material':
                 qs = qs.filter(materials__type=val)
 
-        order = self.request.GET.get('order')
-        order_map = {"newest": "-id", "price_asc": "price", "price_desc": "-price"}
-        if order in order_map:
-            qs = qs.order_by(order_map[order])
+        order = (self.request.GET.get('order') or 'newest').strip()
+
+        if order == 'price_asc':
+            qs = qs.order_by('price', '-created_at', '-id')
+        elif order == 'price_desc':
+            qs = qs.order_by('-price', '-created_at', '-id')
+        elif order == 'oldest':
+            qs = qs.order_by('created_at', 'id')
+        elif order == 'rating_desc':
+            qs = qs.order_by('-rating_avg', '-created_at', '-id')
+        elif order == 'rating_asc':
+            qs = qs.order_by('rating_avg', '-created_at', '-id')
+        else:
+            qs = qs.order_by('-created_at', '-id')
 
         return qs.distinct()
 
@@ -190,6 +200,29 @@ class CategoryFilterView(ListView):
         params.pop("page", None)
         ctx["qs"] = params.urlencode()
 
+        page_qs = ctx.get("page_obj").object_list if ctx.get("is_paginated") else ctx["object_list"]
+        jewel_ids = list(page_qs.values_list("id", flat=True))
+        user_ratings_map = {}
+
+        if jewel_ids:
+            ct = ContentType.objects.get_for_model(Jewel)
+
+            if self.request.user.is_authenticated:
+                rows = (Rating.objects
+                        .filter(content_type=ct, object_id__in=jewel_ids, user=self.request.user)
+                        .values_list("object_id", "rating"))
+            else:
+                if not self.request.session.session_key:
+                    self.request.session.create()
+                sk = self.request.session.session_key
+                rows = (Rating.objects
+                        .filter(content_type=ct, object_id__in=jewel_ids, session_key=sk)
+                        .values_list("object_id", "rating"))
+
+            user_ratings_map = {obj_id: rating for (obj_id, rating) in rows}
+
+        ctx["user_ratings_map"] = user_ratings_map
+
         return ctx
 
 
@@ -223,15 +256,16 @@ class JewelCreateView(LoginRequiredMixin, StaffRequiredMixin, CreateView):
 
 photo_prefetch = Prefetch("photos", queryset=Photo.objects.order_by("sort_order", "id"))
 specs_prefetch = Prefetch("specs", queryset=JewelSpec.objects.order_by("order", "id"))
-tabs_prefetch  = Prefetch("tabs",  queryset=JewelTab.objects.order_by("order", "id"))
+tabs_prefetch = Prefetch("tabs", queryset=JewelTab.objects.order_by("order", "id"))
 
 qs = (Jewel.objects
       .select_related("category")
       .prefetch_related(photo_prefetch, specs_prefetch, tabs_prefetch))
 
 photo_prefetch = Prefetch("photos", queryset=Photo.objects.order_by("sort_order", "id"))
-specs_prefetch = Prefetch("specs",  queryset=JewelSpec.objects.order_by("order", "id"))
-tabs_prefetch  = Prefetch("tabs",   queryset=JewelTab.objects.order_by("order", "id"))
+specs_prefetch = Prefetch("specs", queryset=JewelSpec.objects.order_by("order", "id"))
+tabs_prefetch = Prefetch("tabs", queryset=JewelTab.objects.order_by("order", "id"))
+
 
 class JewelDetailView(DetailView):
     model = Jewel
@@ -252,10 +286,19 @@ class JewelDetailView(DetailView):
         ctx["main_photo"] = photos[0] if photos else None
         ctx["thumbs"] = photos[1:9]
         ctx["materials"] = list(self.object.materials.values_list("type", flat=True))
-        ctx["metals"]    = list(self.object.metals.values_list("type", flat=True))
-        ctx["gems"]      = list(self.object.gems.values_list("type", flat=True))
+        ctx["metals"] = list(self.object.metals.values_list("type", flat=True))
+        ctx["gems"] = list(self.object.gems.values_list("type", flat=True))
         ctx["bgn_per_eur"] = EUR_BGN_RATE
+        my = None
+        if self.request.user.is_authenticated:
+            ct = ContentType.objects.get_for_model(Jewel)
+            my = (Rating.objects
+                  .filter(content_type=ct, object_id=self.object.pk, user=self.request.user)
+                  .values_list('rating', flat=True)
+                  .first())
+        ctx["user_rating"] = my
         return ctx
+
 
 class JewelQuickView(DetailView):
     model = Jewel
@@ -272,7 +315,15 @@ class JewelQuickView(DetailView):
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
         ctx["materials"] = list(self.object.materials.values_list("type", flat=True))
-        ctx["metals"]    = list(self.object.metals.values_list("type", flat=True))
-        ctx["gems"]      = list(self.object.gems.values_list("type", flat=True))
+        ctx["metals"] = list(self.object.metals.values_list("type", flat=True))
+        ctx["gems"] = list(self.object.gems.values_list("type", flat=True))
         ctx["bgn_per_eur"] = EUR_BGN_RATE
+        my = None
+        if self.request.user.is_authenticated:
+            ct = ContentType.objects.get_for_model(Jewel)
+            my = (Rating.objects
+                  .filter(content_type=ct, object_id=self.object.pk, user=self.request.user)
+                  .values_list('rating', flat=True)
+                  .first())
+        ctx["user_rating"] = my
         return ctx

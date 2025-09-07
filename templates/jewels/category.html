@@ -1,6 +1,7 @@
 {% extends 'common/base.html' %}
 {% load static %}
 {% load money %}
+{% load utils %}
 
 {% block category_css %}
     <link rel="stylesheet" href="{% static 'css/category/category.css' %}">
@@ -22,18 +23,18 @@
                         <span>Sort by:</span>
                         <select name="order" form="filters">
                             <option value="newest" {% if order == 'newest' %}selected{% endif %}>Newest first</option>
-                            <option value="newest" {% if order == 'newest' %}selected{% endif %}>Oldest first</option>
+                            <option value="oldest" {% if order == 'oldest' %}selected{% endif %}>Oldest first</option>
                             <option value="price_asc" {% if order == 'price_asc' %}selected{% endif %}>Price: low →
                                 high
                             </option>
                             <option value="price_desc" {% if order == 'price_desc' %}selected{% endif %}>Price: high →
                                 low
                             </option>
-                            <option value="rating_desc" {% if order == 'rating_desc' %}selected{% endif %}>
-                                Rating: high → low
+                            <option value="rating_desc" {% if order == 'rating_desc' %}selected{% endif %}>Rating: high
+                                → low
                             </option>
-                            <option value="rating_desc" {% if order == 'rating_desc' %}selected{% endif %}>
-                                Rating: low → high
+                            <option value="rating_asc" {% if order == 'rating_asc' %}selected{% endif %}>Rating: low →
+                                high
                             </option>
                         </select>
                     </label>
@@ -88,19 +89,20 @@
                                     >{{ product.name }}</a>
                                 </h2>
 
-                                <div class="rating-stars" data-rating="{{ product.rating|default:0 }}"
+                                <div class="rating-stars"
+                                     data-avg="{{ product.rating_avg|default:0 }}"
+                                     data-count="{{ product.rating_count|default:0 }}"
+                                     data-my="{{ user_ratings_map|get_item:product.id }}"
+                                     data-show-count="0"
+                                     data-rate-url="{% url 'api:rate-jewel' pk=product.id %}"
                                      aria-label="Rating">
-                                    <button type="button" class="star" aria-label="1 star"><i class="far fa-star"></i>
-                                    </button>
-                                    <button type="button" class="star" aria-label="2 stars"><i class="far fa-star"></i>
-                                    </button>
-                                    <button type="button" class="star" aria-label="3 stars"><i class="far fa-star"></i>
-                                    </button>
-                                    <button type="button" class="star" aria-label="4 stars"><i class="far fa-star"></i>
-                                    </button>
-                                    <button type="button" class="star" aria-label="5 stars"><i class="far fa-star"></i>
-                                    </button>
-                                    <span class="rating-count">({{ product.reviews_count|default:0 }})</span>
+                                    {% for _ in "12345" %}
+                                        <button type="button" class="star" data-value="{{ forloop.counter }}"
+                                                aria-label="{{ forloop.counter }} star">
+                                            <i class="far fa-star"></i>
+                                        </button>
+                                    {% endfor %}
+                                    <span class="rating-count">({{ product.rating_avg|default:0|floatformat:1 }}/5)</span>
                                 </div>
 
                                 <div class="card-actions">
