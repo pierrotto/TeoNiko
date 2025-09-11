@@ -69,6 +69,7 @@ TEMPLATES = [
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
                 "TeoNiko.jewels.context_processors.nav_categories",
+                "TeoNiko.jewels.context_processors.wishlist_count"
             ],
         },
     },

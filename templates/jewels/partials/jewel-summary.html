@@ -1,9 +1,21 @@
+{% load static %}
 {% load money %}
 
 <div class="summary">
     <h1 class="title">
         {% firstof jewel.short_description jewel.short_description jewel.name %}
     </h1>
+
+    <div class="card-actions">
+        <button class="like-btn{% if jewel.is_liked %} liked{% endif %}"
+                type="button"
+                data-jewel-id="{{ jewel.id }}"
+                data-url="{% url 'toggle-like' jewel.id %}"
+                aria-pressed="{% if jewel.is_liked %}true{% else %}false{% endif %}"
+                title="{% if jewel.is_liked %}Unlike{% else %}Like{% endif %}">
+            <i class="{% if jewel.is_liked %}fas{% else %}far{% endif %} fa-heart"></i>
+        </button>
+    </div>
 
     <div class="rating-stars"
          data-avg="{{ jewel.rating_avg|default:0 }}"

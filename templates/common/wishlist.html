@@ -1,0 +1,63 @@
+{% extends "common/base.html" %}
+{% load static money %}
+
+{% block extra_css %}
+    <link rel="stylesheet" href="{% static 'css/category/category.css' %}">
+    <link rel="stylesheet" href="{% static 'css/common/wishlist.css' %}">
+{% endblock %}
+
+{% block content %}
+    <main class="container wishlist content">
+        <h1 class="category-title">My wishlist</h1>
+
+        <ul class="wl-list">
+            {% for like in likes %}
+                {% with j=like.jewel %}
+                    <li class="wl-row">
+
+                        <div class="wl-media">
+                            <a class="product-thumb js-qv" href="#"
+                               data-qv-url="{% url 'jewel-quick-view' pk=j.id slug=j.slug %}">
+                                {% with p=j.photos.all.0 %}
+                                    {% if p %}<img src="{{ p.image.url }}" alt="{{ j.name }}">
+                                    {% else %}
+                                        <img src="{% static 'images/placeholders/category.jpg' %}" alt="{{ j.name }}">
+                                    {% endif %}
+                                {% endwith %}
+                            </a>
+                        </div>
+
+                        <div class="wl-info">
+                            <h2 class="product-title product-title--big">
+                                <a class="js-qv" href="#"
+                                   data-qv-url="{% url 'jewel-quick-view' pk=j.id slug=j.slug %}">
+                                    {% firstof j.short_description j.name %}
+                                </a>
+                            </h2>
+                        </div>
+
+                        <div class="wl-price">
+            <span class="price price--big">
+              {{ j.price }} BGN
+              <span class="price-eur">({{ j.price|to_eur }} €)</span>
+            </span>
+                        </div>
+
+                        <div class="wl-actions">
+                            <button class="btn btn-buy" type="button" disabled title="Coming soon">BUY</button>
+
+                            <button class="btn btn-delete like-btn liked" type="button"
+                                    data-remove-row="1"
+                                    data-url="{% url 'toggle-like' j.id %}"
+                                    aria-pressed="true" title="Remove from wishlist">
+                                DELETE
+                            </button>
+                        </div>
+                    </li>
+                {% endwith %}
+            {% empty %}
+                <p>Your wishlist is empty.</p>
+            {% endfor %}
+        </ul>
+    </main>
+{% endblock %}

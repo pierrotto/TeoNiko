@@ -12,29 +12,30 @@
 
 .content .product-card {
     position: relative;
+    font-size: 0.95rem;
 }
 
+
 .content .card-actions {
-    display: flex;
-    justify-content: flex-end;
-    align-items: center;
-    height: 0;
+    position: static;
+    top: auto;
+    right: auto;
+    height: auto;
     margin: 0;
     padding: 0;
     overflow: visible;
+    z-index: auto;
 }
 
 .content .card-actions .like-btn {
-    position: relative;
-    top: -60px;
-    right: 0;
-    margin-right: 6px;
+    position: static;
+    top: auto;
+    margin: 0;
+    padding: 0;
     background: transparent;
     border: 0;
-    padding: 0;
-    box-shadow: none;
-    color: #444;
     cursor: pointer;
+    z-index: 6;
 }
 
 .content .card-actions .like-btn i {
@@ -72,8 +73,8 @@
 
 .content .product-thumb {
     position: relative;
-    z-index: 0;
     overflow: hidden;
+    z-index: 0;
 }
 
 .content .product-thumb img {
@@ -274,6 +275,37 @@
 
 .product-grid--grid {
     grid-template-columns:repeat(3, 1fr);
+}
+
+.product-grid--grid .product-info {
+    display: grid;
+    grid-template-columns: 1fr auto;
+    grid-template-rows: auto auto auto;
+    gap: 6px 10px;
+}
+
+.product-grid--grid h2.product-title {
+    grid-column: 1 / 3;
+    grid-row: 1;
+    margin: 0;
+}
+
+.product-grid--grid .card-actions {
+    grid-column: 2;
+    grid-row: 2;
+    align-self: center;
+    justify-self: end;
+    position: static;
+}
+
+.product-grid--grid .rating-stars {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.product-grid--grid .price-row {
+    grid-column: 1 / 3;
+    grid-row: 3;
 }
 
 @media (max-width: 1100px) {
@@ -495,10 +527,6 @@
     z-index: 4;
 }
 
-.content .product-card {
-    font-size: 0.95rem;
-}
-
 .content .product-card h2.product-title {
     font-size: 1rem;
     line-height: 1.25;
@@ -607,43 +635,38 @@
 .product-grid--list .product-card h2.product-title {
     grid-column: 1;
     grid-row: 1;
+}
+
+.product-grid--list .card-actions {
+    grid-column: 2;
+    grid-row: 2;
+    justify-self: end;
+    align-self: center;
+    position: static;
+}
+
+.product-grid--list .card-actions .like-btn {
+    position: static;
+    margin: 0;
+}
+
+.product-grid--list .rating-stars {
+    grid-column: 1;
+    grid-row: 2;
+}
+
+.product-grid--list .product-card .price {
+    white-space: normal;
     display: -webkit-box;
     -webkit-box-orient: vertical;
     -webkit-line-clamp: 2;
     overflow: hidden;
-    margin: 0;
-}
-
-.product-grid--list .card-actions{
-  grid-column: 2;
-  grid-row: 1;
-  justify-self: end;
-  align-self: start;
-  height: auto;
-  margin: 0;
-  padding: 0;
-}
-
-.product-grid--list .card-actions .like-btn{
-  position: static;
-  margin: 0;
-}
-
-.product-grid--list .rating-stars{
-  grid-column: 1 / 3;
-  grid-row: 2;
-}
-
-.product-grid--list .product-card .price{
-  white-space: normal;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
 }
 
 .product-grid--list .product-info,
-.product-grid--list .product-extra{ min-width: 0; }
+.product-grid--list .product-extra {
+    min-width: 0;
+}
 
 :root {
     --list-snippet-lines: 8;

@@ -1,0 +1,18 @@
+.content .card-actions .like-btn.liked i,
+.like-btn.liked i {
+  color: #e11d48 !important;
+}
+
+.like-btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 4px;
+  transition: transform .08s ease;
+}
+.like-btn:active { transform: scale(0.94); }
+
+.like-btn i { font-size: 1.1rem; color: #111; opacity: 1; }
+.like-btn:hover i { opacity: 1; }
+
+.like-btn.liked i { color: #d10; }

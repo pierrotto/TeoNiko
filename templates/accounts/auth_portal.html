@@ -1,99 +1,99 @@
+{% extends 'common/base.html' %}
 {% load static %}
-<!doctype html>
-<html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Sign in / Create account</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+{% block extra_css %}
     <link rel="stylesheet" href="{% static 'css/accounts/auth_portal.css' %}"/>
-</head>
-<body>
-<div class="wrap">
-    <div class="grid">
-        <!-- LOGIN -->
-        <form method="post" novalidate>
-            {% csrf_token %}
-            <h2>Sign in</h2>
+{% endblock %}
 
-            {% if login_form.non_field_errors %}
-                <div class="errors">{{ login_form.non_field_errors }}</div>
-            {% endif %}
+{% block content %}
+    <main class="auth-portal">
+        <div class="wrap">
+            <div class="grid">
+                <!-- LOGIN -->
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    <h2>Sign in</h2>
 
-            <div class="field">
-                <label for="{{ login_form.username.id_for_label }}">Email</label>
-                {{ login_form.username }}
-                {% for e in login_form.username.errors %}
-                    <div class="errors">{{ e }}</div>{% endfor %}
-            </div>
+                    {% if login_form.non_field_errors %}
+                        <div class="errors">{{ login_form.non_field_errors }}</div>
+                    {% endif %}
 
-            <div class="field">
-                <label for="{{ login_form.password.id_for_label }}">Password</label>
-                {{ login_form.password }}
-                {% for e in login_form.password.errors %}
-                    <div class="errors">{{ e }}</div>{% endfor %}
-            </div>
+                    <div class="field">
+                        <label for="{{ login_form.username.id_for_label }}">Email</label>
+                        {{ login_form.username }}
+                        {% for e in login_form.username.errors %}
+                            <div class="errors">{{ e }}</div>{% endfor %}
+                    </div>
 
-            <div class="actions">
-                <button type="submit" name="login-submit">Sign in</button>
-                <span class="muted" style="margin-left:8px;">
+                    <div class="field">
+                        <label for="{{ login_form.password.id_for_label }}">Password</label>
+                        {{ login_form.password }}
+                        {% for e in login_form.password.errors %}
+                            <div class="errors">{{ e }}</div>{% endfor %}
+                    </div>
+
+                    <div class="actions">
+                        <button type="submit" name="login-submit">Sign in</button>
+                        <span class="muted" style="margin-left:8px;">
           <a href="{% url 'password_reset' %}">Forgot password?</a>
         </span>
+                    </div>
+                </form>
+
+                <!-- SIGNUP -->
+                <form method="post" novalidate>
+                    {% csrf_token %}
+                    <h2>Create account</h2>
+
+                    {% if signup_form.non_field_errors %}
+                        <div class="errors">{{ signup_form.non_field_errors }}</div>
+                    {% endif %}
+
+                    <div class="field">
+                        <label for="{{ signup_form.first_name.id_for_label }}">First name</label>
+                        {{ signup_form.first_name }}
+                        {% for e in signup_form.first_name.errors %}
+                            <div class="errors">{{ e }}</div>{% endfor %}
+                    </div>
+
+                    <div class="field">
+                        <label for="{{ signup_form.last_name.id_for_label }}">Last name</label>
+                        {{ signup_form.last_name }}
+                        {% for e in signup_form.last_name.errors %}
+                            <div class="errors">{{ e }}</div>{% endfor %}
+                    </div>
+
+                    <div class="field">
+                        <label for="{{ signup_form.email.id_for_label }}">Email</label>
+                        {{ signup_form.email }}
+                        {% for e in signup_form.email.errors %}
+                            <div class="errors">{{ e }}</div>{% endfor %}
+                    </div>
+
+                    <div class="field">
+                        <label for="{{ signup_form.password1.id_for_label }}">Password</label>
+                        {{ signup_form.password1 }}
+                        {% for e in signup_form.password1.errors %}
+                            <div class="errors">{{ e }}</div>{% endfor %}
+                    </div>
+
+                    <div class="field">
+                        <label for="{{ signup_form.password2.id_for_label }}">Confirm password</label>
+                        {{ signup_form.password2 }}
+                        {% for e in signup_form.password2.errors %}
+                            <div class="errors">{{ e }}</div>{% endfor %}
+                    </div>
+
+                    <div class="actions">
+                        <button type="submit" name="signup-submit">Create account</button>
+                    </div>
+
+                    <p class="muted" style="margin-top:10px;">
+                        By creating an account you agree to our Terms and Privacy Policy.
+                    </p>
+                </form>
             </div>
-        </form>
+        </div>
+    </main>
 
-        <!-- SIGNUP -->
-        <form method="post" novalidate>
-            {% csrf_token %}
-            <h2>Create account</h2>
-
-            {% if signup_form.non_field_errors %}
-                <div class="errors">{{ signup_form.non_field_errors }}</div>
-            {% endif %}
-
-            <div class="field">
-                <label for="{{ signup_form.first_name.id_for_label }}">First name</label>
-                {{ signup_form.first_name }}
-                {% for e in signup_form.first_name.errors %}
-                    <div class="errors">{{ e }}</div>{% endfor %}
-            </div>
-
-            <div class="field">
-                <label for="{{ signup_form.last_name.id_for_label }}">Last name</label>
-                {{ signup_form.last_name }}
-                {% for e in signup_form.last_name.errors %}
-                    <div class="errors">{{ e }}</div>{% endfor %}
-            </div>
-
-            <div class="field">
-                <label for="{{ signup_form.email.id_for_label }}">Email</label>
-                {{ signup_form.email }}
-                {% for e in signup_form.email.errors %}
-                    <div class="errors">{{ e }}</div>{% endfor %}
-            </div>
-
-            <div class="field">
-                <label for="{{ signup_form.password1.id_for_label }}">Password</label>
-                {{ signup_form.password1 }}
-                {% for e in signup_form.password1.errors %}
-                    <div class="errors">{{ e }}</div>{% endfor %}
-            </div>
-
-            <div class="field">
-                <label for="{{ signup_form.password2.id_for_label }}">Confirm password</label>
-                {{ signup_form.password2 }}
-                {% for e in signup_form.password2.errors %}
-                    <div class="errors">{{ e }}</div>{% endfor %}
-            </div>
-
-            <div class="actions">
-                <button type="submit" name="signup-submit">Create account</button>
-            </div>
-
-            <p class="muted" style="margin-top:10px;">
-                By creating an account you agree to our Terms and Privacy Policy.
-            </p>
-        </form>
-    </div>
-</div>
-</body>
-</html>
+{% endblock %}

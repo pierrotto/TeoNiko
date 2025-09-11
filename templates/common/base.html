@@ -26,6 +26,8 @@
 
 {% include 'common/nav.html' %}
 
+<form style="display:none">{% csrf_token %}</form>
+
 {% block content %}{% endblock %}
 
 {% include 'common/footer.html' %}
@@ -40,6 +42,7 @@
 
 <script src="{% static 'js/components/ratings.js' %}" defer></script>
 <script src="{% static 'js/components/quick-view.js' %}" defer></script>
+<script src="{% static 'js/components/likes.js' %}" defer></script>
 
 {% block category_js %}{% endblock %}
 {% block jewel-details-js %}{% endblock %}

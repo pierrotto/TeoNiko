@@ -7,4 +7,5 @@ urlpatterns = [
     path("auth/", auth_portal, name="auth-portal"),
     path("profile/", account_settings, name="account-settings"),
     path("logout/", LogoutView.as_view(), name="logout"),
+
 ]

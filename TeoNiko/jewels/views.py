@@ -4,6 +4,8 @@ from django.contrib.contenttypes.models import ContentType
 from django.db.models import Min, Max, Prefetch
 from django.urls import reverse
 from django.views.generic import ListView, CreateView, DetailView
+
+from TeoNiko.common.mixins import LikeAnnotateMixin
 from TeoNiko.common.models import Rating
 from TeoNiko.jewels.forms import JewelAddForm
 from TeoNiko.jewels.mixins import StaffRequiredMixin
@@ -47,7 +49,7 @@ class CategoryLandingPageView(ListView):
         return ctx
 
 
-class CategoryFilterView(ListView):
+class CategoryFilterView(LikeAnnotateMixin, ListView):
     model = Jewel
     context_object_name = 'jewels'
     template_name = 'jewels/category.html'
@@ -127,7 +129,11 @@ class CategoryFilterView(ListView):
         else:
             qs = qs.order_by('-created_at', '-id')
 
-        return qs.distinct()
+        qs = qs.distinct()
+
+        qs = self.with_likes(qs)
+
+        return qs
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -267,7 +273,7 @@ specs_prefetch = Prefetch("specs", queryset=JewelSpec.objects.order_by("order", 
 tabs_prefetch = Prefetch("tabs", queryset=JewelTab.objects.order_by("order", "id"))
 
 
-class JewelDetailView(DetailView):
+class JewelDetailView(LikeAnnotateMixin, DetailView):
     model = Jewel
     template_name = "jewels/jewel-details.html"
     queryset = (
@@ -278,6 +284,9 @@ class JewelDetailView(DetailView):
             "gems", "materials", "metals"
         )
     )
+
+    def get_queryset(self):
+        return self.with_likes(super().get_queryset())
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
@@ -300,7 +309,7 @@ class JewelDetailView(DetailView):
         return ctx
 
 
-class JewelQuickView(DetailView):
+class JewelQuickView(LikeAnnotateMixin, DetailView):
     model = Jewel
     template_name = "jewels/partials/quick-view.html"
     queryset = (
@@ -311,6 +320,9 @@ class JewelQuickView(DetailView):
             "gems", "materials", "metals"
         )
     )
+
+    def get_queryset(self):
+        return self.with_likes(super().get_queryset())
 
     def get_context_data(self, **kwargs):
         ctx = super().get_context_data(**kwargs)
